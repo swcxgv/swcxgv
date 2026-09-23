@@ -1,15 +1,35 @@
 :root {
   --color-page: #eef4f1;
+  --color-page-start: #f7faf8;
   --color-card: #ffffff;
   --color-text: #26332f;
   --color-muted: #7b8984;
   --color-border: #dce7e2;
+  --color-item: #f8fbf9;
   --color-primary: #287d6a;
   --color-primary-dark: #1f6555;
   --color-danger: #c7655b;
+  --color-danger-hover: #fbeeed;
+  --color-button-text: #ffffff;
   --color-shadow: rgba(38, 61, 53, 0.12);
   --radius-card: 20px;
   --radius-control: 10px;
+}
+
+:root[data-theme="dark"] {
+  --color-page: #182522;
+  --color-page-start: #24332f;
+  --color-card: #263833;
+  --color-text: #edf5f1;
+  --color-muted: #a9bbb4;
+  --color-border: #40534c;
+  --color-item: #30443d;
+  --color-primary: #65c2a5;
+  --color-primary-dark: #4aa589;
+  --color-danger: #f08a7e;
+  --color-danger-hover: #4a302e;
+  --color-button-text: #17251f;
+  --color-shadow: rgba(0, 0, 0, 0.28);
 }
 
 * {
@@ -22,22 +42,47 @@ body {
   padding: 32px 16px;
   display: grid;
   place-items: center;
-  background: linear-gradient(135deg, #f7faf8 0%, var(--color-page) 100%);
+  background: linear-gradient(135deg, var(--color-page-start) 0%, var(--color-page) 100%);
   color: var(--color-text);
   font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  transition: background 180ms ease, color 180ms ease;
 }
 
 .todo-card {
   width: min(100%, 520px);
   padding: 36px;
   background: var(--color-card);
-  border: 1px solid rgba(220, 231, 226, 0.8);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-card);
   box-shadow: 0 18px 45px var(--color-shadow);
+  transition: background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
 
 .todo-header {
   margin-bottom: 28px;
+}
+
+.title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.theme-toggle {
+  flex: 0 0 auto;
+  padding: 8px 10px;
+  color: var(--color-text);
+  font: inherit;
+  font-size: 0.82rem;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  background: var(--color-item);
 }
 
 .eyebrow {
@@ -76,6 +121,7 @@ h1 {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-control);
   outline: none;
+  background: var(--color-card);
   transition: border-color 160ms ease, box-shadow 160ms ease;
 }
 
@@ -86,7 +132,7 @@ h1 {
 
 .todo-form button {
   padding: 0 20px;
-  color: #ffffff;
+  color: var(--color-button-text);
   font: inherit;
   font-weight: 700;
   background: var(--color-primary);
@@ -112,13 +158,37 @@ h1 {
   list-style: none;
 }
 
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  margin: -8px 0 24px;
+}
+
+.filter-button {
+  padding: 7px 12px;
+  color: var(--color-muted);
+  font: inherit;
+  font-size: 0.88rem;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.filter-button:hover,
+.filter-button.active {
+  color: var(--color-primary);
+  background: var(--color-item);
+  border-color: var(--color-border);
+}
+
 .todo-item {
   display: flex;
   align-items: center;
   gap: 12px;
   min-height: 52px;
   padding: 10px 12px;
-  background: #f8fbf9;
+  background: var(--color-item);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-control);
 }
@@ -156,7 +226,7 @@ h1 {
 }
 
 .delete-button:hover {
-  background: #fbeeed;
+  background: var(--color-danger-hover);
 }
 
 .empty-state {
@@ -198,4 +268,5 @@ h1 {
   .todo-form button {
     padding: 0 16px;
   }
+
 }
