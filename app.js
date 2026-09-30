@@ -5,6 +5,7 @@ const todoInput = document.querySelector("#todo-input");
 const todoList = document.querySelector("#todo-list");
 const emptyState = document.querySelector("#empty-state");
 const remainingCount = document.querySelector("#remaining-count");
+const clearCompletedButton = document.querySelector("#clear-completed-button");
 const themeToggle = document.querySelector("#theme-toggle");
 const filterButtons = document.querySelectorAll(".filter-button");
 const THEME_STORAGE_KEY = "offline-todo-theme";
@@ -97,6 +98,7 @@ function renderTodos() {
   } else if (currentFilter === "completed") {
       emptyState.textContent = "目前沒有已完成的待辦事項；未完成的項目只是被「已完成」篩選隱藏，並未刪除。";
   }
+  clearCompletedButton.disabled = !todos.some((todo) => todo.completed);
   remainingCount.textContent = `未完成:${todos.filter((todo) => !todo.completed).length} 項`;
 }
 
@@ -123,6 +125,23 @@ function deleteTodo(id) {
   saveTodos();
   renderTodos();
 }
+
+function clearCompletedTodos() {
+  if (!todos.some((todo) => todo.completed)) {
+    return;
+  }
+
+  const confirmed = window.confirm("確定要清除所有已完成的待辦事項嗎？此操作無法復原。");
+  if (!confirmed) {
+    return;
+  }
+
+  todos = todos.filter((todo) => !todo.completed);
+  saveTodos();
+  renderTodos();
+}
+
+clearCompletedButton.addEventListener("click", clearCompletedTodos);
 
 todoForm.addEventListener("submit", (event) => {
   event.preventDefault();
